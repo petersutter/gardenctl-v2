@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -20,7 +19,6 @@ import (
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	cliflag "k8s.io/component-base/cli/flag"
 	"k8s.io/klog/v2"
-
 	"github.com/gardener/gardenctl-v2/internal/util"
 	cmdconfig "github.com/gardener/gardenctl-v2/pkg/cmd/config"
 	cmdenv "github.com/gardener/gardenctl-v2/pkg/cmd/env"
