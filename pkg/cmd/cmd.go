@@ -27,7 +27,6 @@ import (
 	cmdtarget "github.com/gardener/gardenctl-v2/pkg/cmd/target"
 	cmdversion "github.com/gardener/gardenctl-v2/pkg/cmd/version"
 	"github.com/gardener/gardenctl-v2/pkg/target"
-	"github.com/gardener/gardenctl-v2/pkg/target"
 )
 
 const (
