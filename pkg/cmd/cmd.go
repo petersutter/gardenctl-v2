@@ -209,12 +209,10 @@ type cobraCompletionFuncWithError func(ctx context.Context, manager target.Manag
 func completionWrapper(f *util.FactoryImpl, ioStreams util.IOStreams, completer cobraCompletionFuncWithError) cobraCompletionFunc {
 	return func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		manager, err := f.Manager()
-
 		if err != nil {
 			fmt.Fprintf(ioStreams.ErrOut, "%v\n", err)
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
-
 		result, err := completer(f.Context(), manager)
 		if err != nil {
 			fmt.Fprintf(ioStreams.ErrOut, "%v\n", err)
