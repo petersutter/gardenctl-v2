@@ -19,12 +19,16 @@ jobs:
           sudo apt-get install make -y
           make build
           echo "latest_release_filtered_tag=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - name: List contents of bin/windows-amd64/
+        run: ls -l bin/windows-amd64/
       - name: Upload binaries to release
         uses: AButler/upload-release-assets@c94805dc72e4b20745f543da0f62eaee7722df7a # pin@v2.0.2
         with:
           files: 'bin/darwin-amd64/gardenctl_v2_darwin_amd64;bin/darwin-arm64/gardenctl_v2_darwin_arm64;bin/linux-amd64/gardenctl_v2_linux_amd64;bin/linux-arm64/gardenctl_v2_linux_arm64;bin/windows-amd64/gardenctl_v2_windows_amd64.exe'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ env.latest_release_filtered_tag }}
+      - name: List contents of bin/windows-amd64/
+        run: ls -l bin/windows-amd64/
       - name: Get token for gardener-github-pkg-mngr app
         if: github.event.release.prerelease == false
         id: gardener-github-workflows
