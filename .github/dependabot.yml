@@ -3,6 +3,8 @@ updates:
   - package-ecosystem: "gomod"
     groups:
       dependency:
+        patterns:
+        - "*"
         exclude-patterns:
         - "k8s.io*"
         - "sigs.k8s.io/controller-runtime"
