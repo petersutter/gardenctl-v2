@@ -8,7 +8,7 @@ require (
 	github.com/fatih/color v1.16.0
 	github.com/gardener/gardener v1.86.1
 	github.com/gardener/gardener-extension-provider-openstack v1.38.2
-	github.com/gardener/machine-controller-manager v0.51.1
+	github.com/gardener/machine-controller-manager v0.52.0
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.5.0
 	github.com/mitchellh/go-homedir v1.1.0
