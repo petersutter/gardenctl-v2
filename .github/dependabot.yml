@@ -1,6 +1,11 @@
 version: 2
 updates:
   - package-ecosystem: "gomod"
+    group:
+      dependency:
+        exclude-patterns:
+        - "k8s.io*"
+        - "sigs.k8s.io/controller-runtime"
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
