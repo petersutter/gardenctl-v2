@@ -1,4 +1,8 @@
 golang:
-  image: "golang:1.21.2"
+  image:
+    repository: golang
+    tag: "1.21.2"
 golangci-lint:
-  image: "golangci/golangci-lint:1.56.0"
+  image:
+    repository: golangci/golangci-lint
+    tag: "1.56.0"
