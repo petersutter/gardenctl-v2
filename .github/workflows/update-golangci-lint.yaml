@@ -8,9 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]' && contains(github.event.pull_request.title, 'Bump golangci/golangci-lint from')
     steps:
+      - uses: actions/create-github-app-token@f4c6bf6752984b3a29fcc135a5e70eb792c40c6b # pin@1.8.0
+        id: app-token
+        with:
+          # required
+          app-id: ${{ secrets.GARDENER_GITHUB_WORKFLOW_WRITER_APP_ID }}
+          private-key: ${{ secrets.GARDENER_GITHUB_WORKFLOW_WRITER_APP_PRIVATE_KEY }}
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # pin@v4.1.1
         with:
+          token: ${{ steps.app-token.outputs.token }}
           ref: ${{ github.event.pull_request.head.ref }}
+          # Make sure the value of GITHUB_TOKEN will not be persisted in repo's config
+          persist-credentials: false
       - name: Fetch Dependabot metadata
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@c9c4182bf1b97f5224aee3906fd373f6b61b4526 # pin@v1.6.0
