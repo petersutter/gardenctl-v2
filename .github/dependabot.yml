@@ -24,3 +24,7 @@ updates:
       # gardener/gardener dictates the k8s dependency
       - dependency-name: "k8s.io*"
       - dependency-name: "sigs.k8s.io/controller-runtime"
+  - package-ecosystem: "docker"
+    directory: "/hack" # should watch /hack/values-golang.yaml and create update PRs in case a new golang version is released
+    schedule:
+      interval: weekly
