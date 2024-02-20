@@ -1,0 +1,41 @@
+name: Update Golangci-lint Version
+on: 
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  update-golangci-lint-version:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' && contains(github.event.pull_request.title, 'Bump golangci/golangci-lint from')
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # pin@v4.1.1
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Fetch Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@c9c4182bf1b97f5224aee3906fd373f6b61b4526 # pin@v1.6.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Update Golangci-lint version in golangci-lint.yml
+        run: |
+          NEW_VERSION=${{ steps.dependabot-metadata.outputs.new-version }}
+          sed -i "s/version: v[0-9]*\.[0-9]*\.[0-9]*/version: v$NEW_VERSION/g" .github/workflows/golangci-lint.yml
+
+      - name: Update Golangci-lint version in golangci-lint.sh
+        run: |
+          NEW_VERSION=${{ steps.dependabot-metadata.outputs.new-version }}
+          sed -i "s/v[0-9]*\.[0-9]*\.[0-9]*/v$NEW_VERSION/g" hack/golangci-lint.sh
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          if git diff --quiet; then
+            echo "Skip - No changes detected"
+            exit 0
+          fi
+
+          git commit -am "[dependabot-skip] Update Golangci-lint version to v${{ steps.dependabot-metadata.outputs.new-version }}"
+          git push
