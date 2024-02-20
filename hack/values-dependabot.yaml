@@ -1,7 +1,7 @@
 golang:
   image:
     repository: golang
-    tag: "1.21.2"
+    tag: "1.22.0"
 golangci-lint:
   image:
     repository: golangci/golangci-lint
