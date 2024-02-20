@@ -1,1 +1,4 @@
-image: "golang:1.21.2"
+golang:
+  image: "golang:1.21.2"
+golangci-lint:
+  image: "golangci/golangci-lint:1.56.0"
