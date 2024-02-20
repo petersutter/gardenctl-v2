@@ -5,4 +5,4 @@ golang:
 golangci-lint:
   image:
     repository: golangci/golangci-lint
-    tag: "1.56.0"
+    tag: "v1.56.0"
