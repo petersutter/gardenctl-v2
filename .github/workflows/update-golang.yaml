@@ -1,5 +1,5 @@
 name: Update Golang Version
-on: 
+on:
   pull_request_target:
     types: [opened, synchronize, reopened]
 
@@ -8,12 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]' && contains(github.event.pull_request.title, 'Bump golang from')
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # pin@v4.1.1
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.ref }}
       - name: Fetch Dependabot metadata
         id: dependabot-metadata
-        uses: dependabot/fetch-metadata@c9c4182bf1b97f5224aee3906fd373f6b61b4526 # pin@v1.6.0
+        uses: dependabot/fetch-metadata@c9c4182bf1b97f5224aee3906fd373f6b61b4526 # v1.6.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
@@ -22,7 +22,7 @@ jobs:
           NEW_VERSION=${{ steps.dependabot-metadata.outputs.new-version }}
           sed -i "s/golang:[0-9]*\.[0-9]*\.[0-9]*/golang:$NEW_VERSION/g" .ci/pipeline_definitions
 
-      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # pin@v5.0.0
+      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
         with:
           go-version: ${{ steps.dependabot-metadata.outputs.new-version }}
 
