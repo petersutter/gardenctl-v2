@@ -3,7 +3,6 @@
   extends: [
     "config:recommended",
     ":semanticCommitsDisabled",
-    "regexManagers:githubActionsVersions"
   ],
   labels: ["kind/enhancement"],
   postUpdateOptions: ["gomodTidy"],
