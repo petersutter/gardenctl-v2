@@ -10,10 +10,17 @@
   automergeStrategy: "squash",
   customManagers: [
     {
-      // Update `VERSION` and `version` variables in Makefiles, scripts and yaml files.
+      // Generic detection for pod-like image specifications.
+      customType: "regex",
+      fileMatch: ["^\.ci\/pipeline_definitions$"],
+      matchStrings: ["image: (?<depName>.*?):(?<currentValue>.*?)\\s"],
+      datasourceTemplate: "docker"
+    },
+    {
+      // Update `VERSION` and `version` variables yaml files.
       // inspired by `regexManagers:dockerfileVersions` preset
       customType: "regex",
-      fileMatch: ["Makefile$", "\\.mk$", "\\.sh$", "\\.ya?ml$"],
+      fileMatch: ["\\.ya?ml$"],
       matchStrings: [
         "# renovate: datasource=(?<datasource>[a-z-.]+?) depName=(?<depName>[^\\s]+?)(?: (lookupName|packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s.+?(?:_)?(VERSION|version) *[?:]?= *\"?(?<currentValue>.+?)\"?\\s"
       ]
