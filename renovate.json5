@@ -1,5 +1,38 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  $schema: "https://docs.renovatebot.com/renovate-schema.json"
+  postUpdateOptions: ["gomodTidy"],
+  extends: [
+    "config:recommended",
+    ":semanticCommitsDisabled",
+    "regexManagers:githubActionsVersions"
+  ],
+  labels: ["kind/enhancement"],
+  postUpdateOptions: ["gomodTidy"],
+  customManagers: [
+    {
+      // generic detection for install manifests from GitHub releases
+      customType: "regex",
+      fileMatch: ["kustomization\\.yaml$"],
+      matchStrings: ["https:\/\/github\\.com\/(?<depName>.*\/.*?)\/releases\/download\/(?<currentValue>.*?)\/"],
+      datasourceTemplate: "github-releases"
+    },
+    {
+      // generic detection for raw manifests from GitHub refs
+      customType: "regex",
+      fileMatch: ["kustomization\\.yaml$"],
+      matchStrings: ["https:\/\/raw.githubusercontent.com\/(?<depName>.*?/.*?)\/(?<currentValue>.*?)\/"],
+      datasourceTemplate: "github-releases"
+    },
+    {
+      // update `_VERSION` variables in Makefiles and scripts
+      // inspired by `regexManagers:dockerfileVersions` preset
+      customType: "regex",
+      fileMatch: ["Makefile$", "\\.mk$", "\\.sh$"],
+      matchStrings: [
+        "# renovate: datasource=(?<datasource>[a-z-.]+?) depName=(?<depName>[^\\s]+?)(?: (lookupName|packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s.+?_VERSION *[?:]?= *\"?(?<currentValue>.+?)\"?\\s"
+      ]
+    }
+  ],
   "packageRules": [
     {
       // Group golang updates in one PR.
