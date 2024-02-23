@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  "packageRules": [
+    {
+      // Group golang updates in one PR.
+      "groupName": "Update golang",
+      "matchDatasources": ["docker"],
+      "matchPackagePatterns": ["golang"],
+    },
+    {
+      // Group tool updates in one PR.
+      "groupName": "Update tools",
+      "matchFileNames": ["hack\/tools\\.mk"]
+    },
+    {
+      // gardener/gardener dictates these k8s dependencies. Ignore dependency updates for these packages.
+      "matchDatasources": ["go"],
+      "matchPackagePatterns": [
+        "k8s\\.io\/.+",
+        "sigs\\.k8s\\.io\/controller-runtime"
+      ],
+      "enabled": false
+    }
+  ]
+}
