@@ -10,7 +10,7 @@
   automergeStrategy: "squash",
   customManagers: [
     {
-      // Update `_VERSION` and `_version` variables in Makefiles, scripts and yaml files.
+      // Update `VERSION` and `version` variables in Makefiles, scripts and yaml files.
       // inspired by `regexManagers:dockerfileVersions` preset
       customType: "regex",
       fileMatch: ["Makefile$", "\\.mk$", "\\.sh$", "\\.ya?ml$"],
