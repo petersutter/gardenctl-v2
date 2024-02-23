@@ -1,5 +1,5 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json"
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
   postUpdateOptions: ["gomodTidy"],
   extends: [
     "config:recommended",
@@ -33,26 +33,26 @@
       ]
     }
   ],
-  "packageRules": [
+  packageRules: [
     {
       // Group golang updates in one PR.
-      "groupName": "Update golang",
-      "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["golang"],
+      groupName: "Update golang",
+      matchDatasources: ["docker"],
+      matchPackagePatterns: ["golang"],
     },
     {
       // Group tool updates in one PR.
-      "groupName": "Update tools",
-      "matchFileNames": ["hack\/tools\\.mk"]
+      groupName: "Update tools",
+      matchFileNames: ["hack\/tools\\.mk"]
     },
     {
       // gardener/gardener dictates these k8s dependencies. Ignore dependency updates for these packages.
-      "matchDatasources": ["go"],
-      "matchPackagePatterns": [
+      matchDatasources: ["go"],
+      matchPackagePatterns: [
         "k8s\\.io\/.+",
         "sigs\\.k8s\\.io\/controller-runtime"
       ],
-      "enabled": false
+      enabled: false
     }
   ]
 }
