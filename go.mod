@@ -1,12 +1,12 @@
 module github.com/gardener/gardenctl-v2
 
-go 1.21.6
+go 1.22.0
 
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/Masterminds/sprig/v3 v3.2.3
 	github.com/fatih/color v1.16.0
-	github.com/gardener/gardener v1.88.0
+	github.com/gardener/gardener v1.89.0
 	github.com/gardener/gardener-extension-provider-openstack v1.39.1
 	github.com/gardener/machine-controller-manager v0.52.0
 	github.com/golang/mock v1.6.0
