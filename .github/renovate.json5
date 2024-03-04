@@ -33,12 +33,6 @@
       "rangeStrategy": "bump"
     },
     {
-      // Group golang updates in one PR.
-      groupName: "Update golang",
-      groupSlug: "go",
-      matchPackageNames: ["go", "golang"],
-    },
-    {
       // Group tool updates in one PR.
       groupName: "Update tools",
       matchFileNames: ["hack\/tools\\.mk"]
