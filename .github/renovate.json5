@@ -35,7 +35,6 @@
     {
       // Group golang updates in one PR.
       groupName: "go",
-      groupSlug: "go",
       matchPackageNames: ["go", "golang"],
     },
     {
