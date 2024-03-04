@@ -28,6 +28,11 @@
   ],
   packageRules: [
     {
+      // bump go mod directive by default (https://github.com/renovatebot/renovate/blob/main/lib/modules/versioning/go-mod-directive/readme.md)
+      "matchDatasources": ["golang-version"],
+      "rangeStrategy": "bump"
+    },
+    {
       // Group golang updates in one PR.
       groupName: "Update golang",
       groupSlug: "go",
