@@ -97,14 +97,16 @@
       automerge: true
     },
     {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["patch", "digest"],
-      "automerge": true
+      matchManagers: ["github-actions"],
+      matchUpdateTypes: ["major", "minor"],
+      groupName: "major and minor github-actions updates"
+      separateMinorPatch: true
     },
     {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["major", "minor"],
-      "groupName": "major and minor github-actions updates"
-    },
+      matchManagers: ["github-actions"],
+      matchUpdateTypes: ["patch", "digest"],
+      groupName: "patch and digest github-actions updates",
+      automerge: true
+    }
   ]
 }
