@@ -100,7 +100,6 @@
       matchManagers: ["github-actions"],
       matchUpdateTypes: ["major", "minor"],
       groupName: "major and minor github-actions updates",
-      separateMinorPatch: true
     },
     {
       matchManagers: ["github-actions"],
