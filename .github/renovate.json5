@@ -98,9 +98,9 @@
     },
     {
       matchManagers: ["github-actions"],
-      matchUpdateTypes: ["major", "minor"],
       groupName: "major and minor github-actions updates",
-      groupSlug: "major-and-minor-github-actions-updates"
+      groupSlug: "major-and-minor-github-actions-updates",
+      separateMajorMinor: false
     },
     {
       matchManagers: ["github-actions"],
