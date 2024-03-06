@@ -103,13 +103,8 @@
     },
     {
       "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor"],
-      "groupName": "minor github-actions updates"
+      "matchUpdateTypes": ["major", "minor"],
+      "groupName": "major and minor github-actions updates"
     },
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["major"],
-      "groupName": "major github-actions updates"
-    }
   ]
 }
