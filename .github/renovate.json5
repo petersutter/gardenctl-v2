@@ -98,6 +98,11 @@
     },
     {
       matchManagers: ["github-actions"],
+      matchUpdateTypes: ["minor"],
+      groupName: "github-actions"
+    },
+    {
+      matchManagers: ["github-actions"],
       matchUpdateTypes: ["patch", "digest"],
       automerge: true
     }
