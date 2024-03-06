@@ -98,9 +98,8 @@
     },
     {
       matchManagers: ["github-actions"],
-      groupName: "major and minor versions of github-actions",
-      groupSlug: "major-and-minor-github-actions",
-      separateMajorMinor: false
+      groupName: "github-actions",
+      separateMajorMinor: true
     },
     {
       matchManagers: ["github-actions"],
