@@ -98,11 +98,6 @@
     },
     {
       matchManagers: ["github-actions"],
-      groupName: "github-actions",
-      separateMajorMinor: true
-    },
-    {
-      matchManagers: ["github-actions"],
       matchUpdateTypes: ["patch", "digest"],
       automerge: true
     }
