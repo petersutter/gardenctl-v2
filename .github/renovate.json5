@@ -105,7 +105,6 @@
     {
       matchManagers: ["github-actions"],
       matchUpdateTypes: ["patch", "digest"],
-      groupName: "patch and digest github-actions updates",
       automerge: true
     }
   ]
