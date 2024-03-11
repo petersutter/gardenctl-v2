@@ -67,7 +67,6 @@
         "sigs.k8s.io/yaml"
       ],
       separateMinorPatch: true,
-      groupName: "dependencies"
     },
     {
       // automerge patch updates, except k8s dependencies dicated by gardener/gardener (keep in sync with the previous package rule)
@@ -91,6 +90,11 @@
       ],
       matchUpdateTypes: ["patch", "digest"],
       automerge: true
+    },
+    {
+      matchDatasources: ["go"],
+      matchUpdateTypes: ["minor"],
+      groupName: "dependencies"
     }
   ]
 }
