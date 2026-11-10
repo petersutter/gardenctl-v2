@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: Contributors to the Gardener project
 SPDX-License-Identifier: Apache-2.0
 */
 
-package hack_test
+package tools_test
 
 import (
 	"testing"
