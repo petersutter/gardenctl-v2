@@ -63,6 +63,71 @@ jobs:
             os: windows
             architecture: amd64
 
+  update-latest-on-default-branch:
+    # Releases created from a hotfix branch only push their release commit (which updates LATEST)
+    # to that hotfix branch. Propagate LATEST to the default branch, as consumers read it from there.
+    if: ${{ github.ref_name != github.event.repository.default_branch }}
+    needs:
+      - release-to-github-and-bump
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: create-github-app-token
+        uses: gardener/cc-utils/.github/actions/github-auth@v1 # zizmor: ignore[unpinned-uses,ref-confusion] -- same-org action; intentionally allowed for now, planned to pin to a version in the future
+        id: app-token
+        with:
+          token-server: ${{ vars.FEDERATED_GITHUB_ACCESS_TOKEN_SERVER }}
+          repositories: ${{ github.event.repository.name }}
+          permissions: |
+            contents: write
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: gardener/cc-utils/.github/actions/setup-git-identity@v1 # zizmor: ignore[unpinned-uses,ref-confusion] -- same-org action; intentionally allowed for now, planned to pin to a version in the future
+      - name: update-latest
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          VERSION: ${{ needs.release-to-github-and-bump.outputs.version }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+
+          echo "::add-mask::${GITHUB_TOKEN}"
+          basic_auth="$(printf 'x-access-token:%s' "${GITHUB_TOKEN}" | base64 | tr -d '\n')"
+          echo "::add-mask::${basic_auth}"
+          git_with_auth() {
+            GIT_CONFIG_COUNT=1 \
+            GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
+            GIT_CONFIG_VALUE_0="AUTHORIZATION: basic ${basic_auth}" \
+              git "$@"
+          }
+
+          # retry in case of a concurrent update of the default branch
+          for attempt in 1 2 3; do
+            git_with_auth fetch origin "refs/heads/${DEFAULT_BRANCH}"
+            git checkout -B "${DEFAULT_BRANCH}" FETCH_HEAD
+
+            hack/update-latest.sh "${VERSION}" LATEST
+            if git diff --quiet -- LATEST; then
+              exit 0
+            fi
+
+            git commit -m "update LATEST to ${VERSION}" -- LATEST
+            if git_with_auth push origin "HEAD:refs/heads/${DEFAULT_BRANCH}"; then
+              exit 0
+            fi
+
+            echo "push attempt ${attempt} failed, retrying"
+            sleep $((attempt * 5))
+          done
+
+          echo "error: failed to update LATEST on ${DEFAULT_BRANCH}"
+          exit 1
+
   publish-to-package-repositories:
     permissions:
       contents: write
